@@ -29,18 +29,18 @@ To run the code:
 user@user-myshell:~$ make
 And an executable file "sh" is created. Do './sh' to get the output
 
-READING THE COMMAND
+READING THE COMMAND (read.c)
 ---------------------------------------------------------------		
 
 This function uses the getline function to read the command line entered by the user. The getline function reads until the newline character or End of File(EOF) is encountered and then returns the line read back to the main function. 
 
-SPLITTING THE COMMAND
+SPLITTING THE COMMAND (parse.c)
 ---------------------------------------------------------------		
 
 This function splits the command into arguments and stores the arguments in an array. It uses the whitespace as a seperator. 
 The fucnction uses a 2 dimensional buffer array (arr) to store the seperated words from the command line untill a null character is encountered. Then these words are transfered into a 1 dimensional dynamic array (arguments) which is appended with a null at the end. 
 
-EXECUTING THE COMMANDS
+EXECUTING THE COMMANDS (execute.c)
 ---------------------------------------------------------------		
 
 Here, a command is executed using two ways - by calling the execvp or by calling functions written manually. The array command_names[] consists of all the commands which are executed by manually and the array builtin_command_names consists of commands which are executed by calling exec(). 
@@ -51,14 +51,14 @@ The function launch_builtin() is called when the command name matches with an en
 
 NOTE: The functions executed manually do not include any flags for the commads as mentioned in their manual pages
 
-EXECUTING BUILTIN COMMANDS
+EXECUTING BUILTIN COMMANDS (launch.c)
 ---------------------------------------------------------------		
 
 In this function, we use fork() and exec() to create a new process for the command to be executed. The parent process is the shell program and the child process is the command entered by the user (args[0]). This command is passed as an argument to execvp(). 
 When the execvp() is called, a copy of the parent process is craeted. Uopn reading the argument passed to the execvp (command), the execvp loads the program file corresponding to that command and overwrites the parent process in the copy. 
 Execvp() returns an integer ( positiove for successful execution and negetive for failed execution)
 
-EXECUTING COMMANDS MANUALLY
+EXECUTING COMMANDS MANUALLY (commands.c)
 ---------------------------------------------------------------		
 
 Below are functions for different commands. A function is executed when the user entered command matechs with that function. 
